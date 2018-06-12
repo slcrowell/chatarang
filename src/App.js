@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import './App.css';
+import Main from './Main'
 
 class App extends Component {
+  state = {
+    user: {
+      uid: '0',
+      userName: 'test'
+    }
+  }
   render() {
     return (
       <div className="App">
-        <h1>Chatarang</h1>
+        <Main user={this.state.user}/>
       </div>
     );
   }
