@@ -4,6 +4,7 @@ class MessageForm extends React.Component {
     state = {
         newMessage: '',
     }
+    
     handleSumbit = (ev) => {
         ev.preventDefault();
         this.props.addMessage(this.state.newMessage);
