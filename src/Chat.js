@@ -1,59 +1,49 @@
-import React, {Component} from 'react';
-import ChatHeader from './ChatHeader';
-import MessageList from './MessageList';
-import MessageForm from './MessageForm';
+import React, { Component } from 'react'
+
+import ChatHeader from './ChatHeader'
+import MessageList from './MessageList'
+import MessageForm from './MessageForm'
 
 class Chat extends Component {
-    constructor() {
-        super();
+  constructor() {
+    super()
 
-        this.state = {
-            messages: [
-                {
-                    id: 0,
-                    userName: 'crowelsl',
-                    body: 'Test',
-                },
-                {
-                    id: 1,
-                    userName: 'Bot',
-                    body: 'Test again',
-                },
-            ],
-        }
+    this.state = {
+      messages: [
+        {
+          id: 1,
+          userName: 'stephen',
+          body: 'cool',
+        },
+        {
+          id: 2,
+          userName: 'dpalazzo',
+          body: 'This guy is so annoying. I hate my job.',
+        },
+      ]
     }
-    
+  }
 
-    updateMessage = (event) => {
-        this.setState({newMessage: event.target.value});
-    }
+  addMessage = (body) => {
+    const messages = [...this.state.messages]
+    messages.push({
+      id: Date.now(),
+      userName: this.props.user.userName,
+      body,
+    })
 
-    addMessage = (text) => {
-        const messages = [...this.state.messages];
-        messages.push({
-            id: messages.length,
-            userName: this.props.user.userName,
-            body: text,
-        });
-        this.setState({messages});
-        this.setState({newComment: ''});
-    }
+    this.setState({ messages })
+  }
 
-    render() {
-        return (
-            <div className='Chat' style={styles}>
-                <ChatHeader />
-                <MessageList messages={this.state.messages}/>
-                <MessageForm addMessage={this.addMessage} updateMessage={this.updateMessage} newComment={this.state.newComment}/>
-            </div>
-        )
-    }
+  render() {
+    return (
+      <div className="Chat">
+        <ChatHeader />
+        <MessageList messages={this.state.messages} />
+        <MessageForm addMessage={this.addMessage} />
+      </div>
+    )
+  }
 }
 
-const styles = {
-    flex: '1',
-    display: 'flex',
-    flexDirection: 'column',
-}
-
-export default Chat;
+export default Chat

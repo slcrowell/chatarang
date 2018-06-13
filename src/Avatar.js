@@ -1,17 +1,23 @@
-import React, {Component} from 'react';
-import placeholder from './placeholder.png'
-const Avatar = (props) => {
-    return (
-        <img className='Avatar' style={styles} src={placeholder}></img>
-    )
+import React from 'react'
+
+const Avatar = ({ user, style }) => {
+  return (
+    <div
+      className="Avatar"
+      style={{
+        ...styles,
+        ...style,
+        background: `url(https://api.adorable.io/avatars/40/${user.email})`,
+      }}
+    ></div>
+  )
 }
 
 const styles = {
-    backround: 'url(../placeholder.png)',
-    height: '40px',
-    width: '40px',
-    fontSize: '1rem',
-    borderRadius: '20px',      
+  height: '40px',
+  width: '40px',
+  fontSize: '1rem',
+  borderRadius: '20px',
 }
 
-export default Avatar;
+export default Avatar
