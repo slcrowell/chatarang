@@ -9,7 +9,7 @@ const Sidebar = (props) => {
       className="Sidebar"
       style={styles.sidebar}
     >
-      <UserInfo user={props.user} />
+      <UserInfo user={props.user} signOut={props.signOut}/>
       <h1
         style={{
           ...styles.children,

@@ -13,7 +13,7 @@ class SignIn extends Component {
   handleSubmit = (ev) => {
     ev.preventDefault()
     this.props.handleAuth({
-      uid: '234243',
+      uid: '0',
       userName: this.state.email,
       email: this.state.email,
     })
