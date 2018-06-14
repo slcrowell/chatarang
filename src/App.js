@@ -36,7 +36,7 @@ class App extends Component {
   handleAuth = (oauthUser) => {
     const user = {
       uid: oauthUser.uid,
-      displayName: oauthUser.displayName,
+      displayName: (oauthUser.displayName === null) ? oauthUser.email : oauthUser.displayName,
       email: oauthUser.email,
       photoUrl: oauthUser.photoURL,
     }
