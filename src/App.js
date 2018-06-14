@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 
 import './App.css'
-import Main from './Main'
+import { auth } from './base'
 import SignIn from './SignIn'
+import Main from './Main'
 
 class App extends Component {
   state = {
@@ -10,26 +11,56 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if(user) {
-      this.setState({user})
+    const user = JSON.parse(localStorage.getItem('user'))
+    if (user) {
+      this.setState({ user })
     }
+
+    auth.onAuthStateChanged(
+      user => {
+        if (user) {
+          // we signed in
+          this.handleAuth(user)
+        } else {
+          // we signed out
+          this.handleUnauth()
+        }
+      }
+    )
   }
 
-  handleAuth = (info) => {
-    this.setState({user: info});
-    localStorage.setItem('user', JSON.stringify(info));
+  signedIn = () => {
+    return this.state.user.uid
+  }
+
+  handleAuth = (oauthUser) => {
+    const user = {
+      uid: oauthUser.uid,
+      displayName: oauthUser.displayName,
+      email: oauthUser.email,
+      photoUrl: oauthUser.photoURL,
+    }
+    this.setState({ user })
+    localStorage.setItem('user', JSON.stringify(user))
+  }
+
+  handleUnauth = () => {
+    this.setState({ user: {} })
+    localStorage.removeItem('user')
   }
 
   signOut = () => {
-    this.setState({user: {}});
-    localStorage.removeItem('user')
+    auth.signOut()
   }
 
   render() {
     return (
       <div className="App">
-        {(this.state.user.uid) ? <Main user={this.state.user} signOut={this.signOut} /> : <SignIn handleAuth={this.handleAuth}/>}
+        {
+          this.signedIn()
+            ? <Main user={this.state.user} signOut={this.signOut} />
+            : <SignIn />
+        }
       </div>
     )
   }
