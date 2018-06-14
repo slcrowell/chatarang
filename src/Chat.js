@@ -10,16 +10,32 @@ class Chat extends Component {
     super()
 
     this.state = {
-      messages: []
+      messages: [],
+      rebaseBinding: null,
     }
   }
 
-  componentDidMount() {
-    base.syncState('messages', {
+  syncDB = () => {
+    if(this.state.rebaseBinding) {
+      base.removeBinding(this.state.rebaseBinding);
+    }
+    
+    const rebaseBinding = base.syncState(`${this.props.room.name}/messages`, {
       context: this,
       state:'messages',
       asArray: true,
     });
+
+    this.setState({rebaseBinding})
+  }
+  componentDidMount() {
+    this.syncDB();
+  }
+
+  componentDidUpdate(prevProps) {
+    if(prevProps.room.name !== this.props.room.name) {
+      this.syncDB();
+    }
   }
 
   addMessage = (body) => {
@@ -36,8 +52,8 @@ class Chat extends Component {
   render() {
     return (
       <div className="Chat" style={styles}>
-        <ChatHeader />
-        <MessageList messages={this.state.messages} />
+        <ChatHeader room={this.props.room}/>
+        <MessageList messages={this.state.messages} room={this.props.room}/>
         <MessageForm addMessage={this.addMessage} />
       </div>
     )

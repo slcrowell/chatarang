@@ -1,22 +1,33 @@
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite'
+import RoomLink from './RoomLink';
 
-const RoomList = () => {
-  return (
-    <nav
-      className={`RoomList ${css(styles.nav)}`}
-    >
-      <h2 className={css(styles.h2)}>Rooms</h2>
-      <ul className={css(styles.list)}>
-        <li className={css(styles.item)}>
-          <a href="#" className={css(styles.link)}>general</a>
-        </li>
-        <li className={css(styles.item)}>
-          <a href="#" className={css(styles.link)}>random</a>
-        </li>
-      </ul>
-    </nav>
-  )
+class RoomList extends React.Component {
+    state = {
+        rooms: {
+            general: {
+                name: 'general',
+                description: 'Announcements and general chat',
+            },
+
+            random: {
+                name: 'random',
+                description: 'Random Anything',
+            }
+        }
+    }
+    render() {
+        return (
+            <nav
+            className={`RoomList ${css(styles.nav)}`}
+            >
+            <h2 className={css(styles.h2)}>Rooms</h2>
+            <ul className={css(styles.list)}>
+                {Object.keys(this.state.rooms).map(roomName => (<RoomLink key={roomName} loadRoom={this.props.loadRoom} room={this.state.rooms[roomName]}/>))}
+            </ul>
+            </nav>
+        )
+    } 
 }
 
 const styles = StyleSheet.create({
@@ -32,24 +43,6 @@ const styles = StyleSheet.create({
     listStyle: 'none',
     marginLeft: 0,
     paddingLeft: 0,
-  },
-
-  item: {
-    marginBottom: '0.5rem',
-  },
-
-  link: {
-    display: 'block',
-    color: 'whitesmoke',
-    textDecoration: 'none',
-
-    '::before': {
-      content: '"# "',
-    },
-
-    ':hover': {
-      backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    }
   },
 })
 
