@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     boxShadow: '0 1px 1px rgba(0,0,0,.1)',
     marginBottom: '2rem',
+    paddingBottom: '1rem',
   },
 
   label: {
