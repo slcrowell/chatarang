@@ -18,7 +18,7 @@ const Sidebar = (props) => {
       >
         XTBC 18
       </h1>
-      <RoomList changeRoom={props.changeRoom}/>
+      <RoomList />
     </aside>
   )
 }

@@ -1,34 +1,22 @@
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite'
 
-class RoomList extends React.Component {
-  
-  handleGeneral = (ev) => {
-    ev.preventDefault();
-    this.props.changeRoom('general');
-  }
-
-  handleRandom = (ev) => {
-    ev.preventDefault();
-    this.props.changeRoom('random');
-  }
-  render() {
-    return (
-      <nav
-        className={`RoomList ${css(styles.nav)}`}
-      >
-        <h2 className={css(styles.h2)}>Rooms</h2>
-        <ul className={css(styles.list)}>
-          <li className={css(styles.item)}>
-            <a href="#" className={css(styles.link)} onClick={this.handleGeneral}>general</a>
-          </li>
-          <li className={css(styles.item)}>
-            <a href="#" className={css(styles.link)} onClick={this.handleRandom}>random</a>
-          </li>
-        </ul>
-      </nav>
-    )
-  }
+const RoomList = () => {
+  return (
+    <nav
+      className={`RoomList ${css(styles.nav)}`}
+    >
+      <h2 className={css(styles.h2)}>Rooms</h2>
+      <ul className={css(styles.list)}>
+        <li className={css(styles.item)}>
+          <a href="#" className={css(styles.link)}>general</a>
+        </li>
+        <li className={css(styles.item)}>
+          <a href="#" className={css(styles.link)}>random</a>
+        </li>
+      </ul>
+    </nav>
+  )
 }
 
 const styles = StyleSheet.create({
