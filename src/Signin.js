@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, css } from 'aphrodite'
 
-import { auth, googleProvider, githubProvider} from './base'
+import { auth, googleProvider, githubProvider } from './base'
 
 class SignIn extends Component {
   state = {
@@ -17,11 +17,11 @@ class SignIn extends Component {
     // do something?
   }
 
-  authenticateGoogle = () => {
+  googleAuthenticate = () => {
     auth.signInWithPopup(googleProvider)
   }
 
-  authenticateGithub = () => {
+  githubAuthenticate = () => {
     auth.signInWithPopup(githubProvider)
   }
 
@@ -40,25 +40,11 @@ class SignIn extends Component {
             onSubmit={this.handleSubmit}
           >
             <h1>Welcome!</h1>
-            {/* <label htmlFor="email" className={css(styles.label)}>
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              className={css(styles.input)}
-              onChange={this.handleChange}
-              autoFocus
-            />
-            <button type="submit" className={css(styles.button)}>
-              Sign In
-            </button>
-            or */}
 
             <button
               type="button"
               className={css(styles.button)}
-              onClick={this.authenticateGoogle}
+              onClick={this.googleAuthenticate}
             >
               <i className={`fab fa-google ${css(styles.brandIcon)}`}></i>
               Sign in with Google
@@ -67,11 +53,12 @@ class SignIn extends Component {
             <button
               type="button"
               className={css(styles.button)}
-              onClick={this.authenticateGithub}
+              onClick={this.githubAuthenticate}
             >
               <i className={`fab fa-github ${css(styles.brandIcon)}`}></i>
               Sign in with Github
             </button>
+
           </form>
 
           <div className="blurb">
@@ -83,6 +70,7 @@ class SignIn extends Component {
     )
   }
 }
+
 const styles = StyleSheet.create({
   signIn: {
     display: 'flex',
@@ -90,6 +78,7 @@ const styles = StyleSheet.create({
     height: '100vh',
     backgroundColor: '#f6f6f6',
   },
+
   header: {
     backgroundColor: '#fff',
     height: '4rem',
@@ -99,6 +88,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     boxShadow: '0 1px 1px rgba(0,0,0,.1)',
   },
+
   title: {
     color: '#ff3344',
     fontWeight: 400,
@@ -106,6 +96,7 @@ const styles = StyleSheet.create({
     lineHeight: '80px',
     fontSize: '2rem',
   },
+
   main: {
     flex: 1,
     textAlign: 'center',
@@ -115,6 +106,7 @@ const styles = StyleSheet.create({
     margin: '0 auto',
     paddingBottom: '3rem',
   },
+
   form: {
     width: '40rem',
     backgroundColor: 'white',
@@ -122,11 +114,13 @@ const styles = StyleSheet.create({
     marginBottom: '2rem',
     paddingBottom: '2rem',
   },
+
   label: {
     display: 'block',
     textTransform: 'uppercase',
     color: '#999',
   },
+
   input: {
     width: '20rem',
     fontSize: '1.5rem',
@@ -136,13 +130,16 @@ const styles = StyleSheet.create({
     marginBottom: '1rem',
     textAlign: 'center',
     padding: '0.5rem',
+
     ':focus': {
       outline: 0,
     },
   },
+
   h2: {
     fontWeight: 'normal',
   },
+
   button: {
     display: 'block',
     margin: '0 auto',
@@ -153,8 +150,10 @@ const styles = StyleSheet.create({
     color: 'white',
     width: '20rem',
   },
+
   brandIcon: {
     marginRight: '1rem',
   },
 })
+
 export default SignIn

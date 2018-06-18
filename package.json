@@ -6,13 +6,18 @@
     "aphrodite": "^2.2.2",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
-    "react-scripts": "1.1.4"
+    "react-rebase": "^1.0.5",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.4",
+    "re-base": "^3.2.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "firebase deploy",
+    "predeploy": "yarn build"
   },
   "eslintConfig": {
     "extends": "react-app"

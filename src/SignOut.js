@@ -1,9 +1,12 @@
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite'
 
-const SignOut = (props) => {
+const SignOut = ({ signOut }) => {
   return (
-    <button className={css(styles.button)} onClick={props.signOut}>
+    <button
+      className={css(styles.button)}
+      onClick={signOut}
+    >
       <i className="fas fa-sign-out-alt"></i>
     </button>
   )
