@@ -1,14 +1,14 @@
 import React from 'react'
 
-const ChatHeader = ({ room }) => {
+const ChatHeader = (props) => {
   return (
     <div className="ChatHeader" style={styles.header}>
       <div className="roomInfo">
         <h2 style={styles.h2}>
-          #{room.name}
+          #{props.room.name}
         </h2>
         <p style={styles.p}>
-          {room.description}
+          {props.descrip}
         </p>
       </div>
     </div>
