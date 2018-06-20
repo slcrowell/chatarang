@@ -26,6 +26,28 @@ class RoomList extends Component {
     rooms[room.name] = room
     this.setState({ rooms })
   }
+  
+  isMember = (roomName) => {
+    let isValid = false;
+    const members = this.state.rooms[roomName].members;
+
+    for(let i = 0; i < members.length; i++) {
+      if(members[i].value === this.props.user.uid) {
+        isValid = true;
+      }
+    }
+
+    if(isValid) {
+      return(
+        <RoomLink
+          key={roomName}
+          room={this.state.rooms[roomName]}
+        />
+      )
+    } else {
+      return null;
+    }                  
+  }
 
   render() {
     return (
@@ -59,12 +81,15 @@ class RoomList extends Component {
                   {
                     Object.keys(this.state.rooms).map(
                       roomName => (
-                        <RoomLink
+                        (this.state.rooms[roomName].members === undefined) ?
+                        (<RoomLink
                           key={roomName}
                           room={this.state.rooms[roomName]}
                         />
+                        ) :
+                          this.isMember(roomName)
+                        )
                       )
-                    )
                   }
                 </ul>
               </nav>
