@@ -47,7 +47,7 @@ class App extends Component {
     // Build the user object
     const user = {
       uid: oauthUser.uid,
-      displayName: oauthUser.displayName,
+      displayName: (oauthUser.displayName === null ? oauthUser.email : oauthUser.displayName),
       email: oauthUser.email,
       photoUrl: oauthUser.photoURL,
     }
