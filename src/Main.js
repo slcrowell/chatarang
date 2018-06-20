@@ -29,10 +29,33 @@ class Main extends Component {
     }
   }
 
-  loadRoom = (roomName) => {
-    if (roomName === 'new') return null
+  filteredRooms = () => {
+    return this.filteredRoomNames()
+               .map(roomName => this.state.rooms[roomName])
+  }
 
-    const room = this.state.rooms[roomName]
+  filteredRoomNames = () => {
+    return Object.keys(this.state.rooms)
+                 .filter(roomName => {
+                   const room = this.state.rooms[roomName]
+                   if (!room) return false
+
+                   return room.public || this.includesCurrentUser(room)
+                 })
+  }
+
+  includesCurrentUser = (room) => {
+    const members = room.members || []
+    return members.find(
+      userOption => userOption.value === this.props.user.uid
+    )
+  }
+
+  loadRoom = (roomName) => {
+    if (roomName === 'new' || roomName === 'new-direct-message') return null
+
+    const room = this.filteredRooms()
+                     .find(room => room.name === roomName)
 
     if (room) {
       this.setState({ room })
@@ -42,11 +65,31 @@ class Main extends Component {
   }
 
   loadValidRoom = () => {
-    const realRoomName = Object.keys(this.state.rooms).find(
+    const realRoomName = this.filteredRoomNames().find(
       roomName => this.state.rooms[roomName]
     )
 
     this.props.history.push(`/rooms/${realRoomName}`)
+  }
+
+  addRoom = (room) => {
+    const { user } = this.props
+    if (!room.public) {
+      room.members.push({
+        value: user.uid,
+        label: `${user.displayName} (${user.email})`,
+      })
+    }
+
+    if (room.dm) {
+      const memberNames = room.members.map(member => member.label.split(' ')[0])
+      room.displayName = memberNames.join(', ')
+      room.name = room.members.map(member => member.value).join('-')
+    }
+
+    const rooms = {...this.state.rooms}
+    rooms[room.name] = room
+    this.setState({ rooms })
   }
 
   removeRoom = (room) => {
@@ -66,6 +109,8 @@ class Main extends Component {
           user={this.props.user}
           users={this.props.users}
           signOut={this.props.signOut}
+          rooms={this.filteredRooms()}
+          addRoom={this.addRoom}
         />
         <Chat
           user={this.props.user}
