@@ -9,7 +9,7 @@ const RoomLink = ({ room }) => {
         to={`/rooms/${room.name}`}
         className={css(styles.link)}
       >
-        {room.displayName}
+        {room.displayName || room.name}
       </NavLink>
     </li>
   )

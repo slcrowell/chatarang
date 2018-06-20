@@ -6,7 +6,7 @@ import 'react-select/dist/react-select.css'
 class RoomForm extends Component {
   state = {
     room: {
-        name: '',
+        displayName: '',
         description: '',
         public: true,
         dm: false,
