@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import ChatHeader from './ChatHeader'
 import MessageList from './MessageList'
 import MessageForm from './MessageForm'
+
 import base from './base'
 
 class Chat extends Component {
@@ -15,7 +16,7 @@ class Chat extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.syncMessages()
   }
 
@@ -26,17 +27,18 @@ class Chat extends Component {
   }
 
   syncMessages = () => {
-    // Stop syncing with the current endpoint
     if (this.state.rebaseBinding) {
       base.removeBinding(this.state.rebaseBinding)
     }
 
-    // sync with the new endpoint
-    const rebaseBinding = base.syncState(`${this.props.room.name}/messages`, {
-      context: this,
-      state: 'messages',
-      asArray: true,
-    })
+    const rebaseBinding = base.syncState(
+      `${this.props.room.name}/messages`,
+      {
+        context: this,
+        state: 'messages',
+        asArray: true,
+      }
+    )
 
     this.setState({ rebaseBinding })
   }
@@ -53,6 +55,19 @@ class Chat extends Component {
     this.setState({ messages })
   }
 
+  addReaction = (message, emoji) => {
+    message.reactions = message.reactions || {}
+    message.reactions[emoji] = message.reactions[emoji] || []
+
+    message.reactions[emoji].push(this.props.user)
+
+    const messages = [...this.state.messages]
+    const i = messages.findIndex(msg => msg.id === message.id)
+    messages[i] = message
+
+    this.setState({ messages })
+  }
+
   render() {
     return (
       <div className="Chat" style={styles}>
@@ -63,6 +78,7 @@ class Chat extends Component {
         <MessageList
           messages={this.state.messages}
           room={this.props.room}
+          addReaction={this.addReaction}
         />
         <MessageForm addMessage={this.addMessage} />
       </div>

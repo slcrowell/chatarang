@@ -20,21 +20,18 @@ class MessageList extends Component {
       <div className="MessageList" style={styles.list}>
         <div className="roomAnnouncement" style={styles.announcement}>
           <h3 style={styles.h3}>
-            #{room.displayName}
+            #{room.displayName || room.name}
           </h3>
           {
             room.dm
               ? <p>This is the very beginning of the direct message.</p>
-              : <p>This is the very beginning of the #{room.displayName} room.</p>
+              : <p>This is the very beginning of the #{room.displayName || room.name} room.</p>
           }
         </div>
-
         {
-          messages.map(msg => (
-            <Message key={msg.id} message={msg} />
-          ))
+          messages.map(msg => <Message key={msg.id} message={msg} addReaction={this.props.addReaction} />)
         }
-        <div ref={el => this.messagesEnd = el}></div>
+        <div className="end" ref={el => this.messagesEnd = el}></div>
       </div>
     )
   }
@@ -49,7 +46,7 @@ const styles = {
   },
 
   announcement: {
-    padding: '2rem 1rem',
+    padding: '2rem 1rem 10rem',
   },
 
   h3: {
